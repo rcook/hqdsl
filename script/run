@@ -1,0 +1,14 @@
+#!/bin/bash
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  READLINK=greadlink
+else
+  READLINK=readlink
+fi
+SCRIPTPATH=$($READLINK -f $0)
+SCRIPTDIR=$(dirname $SCRIPTPATH)
+PROJECTDIR=$(dirname $SCRIPTDIR)
+
+cabal exec runhaskell -- \
+  -i$PROJECTDIR/src/lib \
+  $PROJECTDIR/src/app/Main.hs
+
